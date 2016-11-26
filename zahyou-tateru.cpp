@@ -5,6 +5,7 @@
 #include "zahyou-tateru.h"
 
 int plaintext(FILE* out, const std::vector<Corner>& corners, const char* param);
+int stltext(FILE* out, const std::vector<Corner>& corners, const char* param);
 
 struct FormatInfo {
 	const char* formatName;
@@ -14,6 +15,7 @@ struct FormatInfo {
 
 FormatInfo formats[] = {
 	{"plaintext", "plaintext for visualizing", plaintext},
+	{"stltext", "text STL", stltext},
 	{NULL, NULL, NULL}
 };
 

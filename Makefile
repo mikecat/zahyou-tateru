@@ -6,7 +6,8 @@ LDFLAGS = -s -static
 OBJS = \
 	zahyou-tateru.o \
 	point-corner.o \
-	plaintext.o
+	plaintext.o \
+	stltext.o
 
 zahyou-tateru: $(OBJS)
 	$(LD) $(LDFLAGS) -o $@ $(OBJS)
