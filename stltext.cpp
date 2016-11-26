@@ -27,9 +27,9 @@ static void printTriangle(FILE* out, const PointWithHeight& a, const PointWithHe
 static void printstl(FILE* out, const Corner& corner1, const Corner& corner2) {
 	// íÍñ ÇèoóÕ
 	printTriangle(out, PointWithHeight(corner2.leftCorner, 0),
-		PointWithHeight(corner1.leftCorner, 0), PointWithHeight(corner2.rightCorner, 0));
+		PointWithHeight(corner2.rightCorner, 0), PointWithHeight(corner1.leftCorner, 0));
 	printTriangle(out, PointWithHeight(corner2.rightCorner, 0),
-		PointWithHeight(corner1.leftCorner, 0), PointWithHeight(corner1.rightCorner, 0));
+		PointWithHeight(corner1.rightCorner, 0), PointWithHeight(corner1.leftCorner, 0));
 	// ç∂ÇÃï«ÇèoóÕ
 	printTriangle(out, PointWithHeight(corner2.leftCorner, corner2.height),
 		PointWithHeight(corner2.leftCorner, 0), PointWithHeight(corner1.leftCorner, 0));
