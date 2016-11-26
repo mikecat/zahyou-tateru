@@ -1,0 +1,74 @@
+#module
+#deffunc setparam double ds, double ox, double oy
+	disp_scale = ds
+	offset_x = ox
+	offset_y = oy
+
+#deffunc drawline double sx, double sy, double dx, double dy
+	line dx * disp_scale + offset_x, ginfo_winy - (dy * disp_scale + offset_y), sx * disp_scale + offset_x, ginfo_winy - (sy * disp_scale + offset_y)
+	return
+#global
+
+window_title = "座標を指定して立てる"
+control_width = 800
+screen 0, control_width, 600, 2
+title window_title
+
+raw_data = ""
+notesel raw_data
+
+disp_scale = 1.0
+offset_x = 0
+offset_y = 0
+window_width = 640
+window_height = 480
+
+mes "データ[単位]: xl yl x y xr yr"
+mesbox raw_data, control_width, 200, 1, 0
+mes "表示倍率[px/単位]"
+input disp_scale, control_width, 20, 0
+mes "Xオフセット[px]"
+input offset_x, control_width, 20, 0
+mes "Yオフセット[px]"
+input offset_y, control_width, 20, 0
+mes "描画幅[px]"
+input window_width, control_width, 20, 0
+mes "描画高さ[px]"
+input window_height, control_width, 20, 0
+mes ""
+objsize control_width, 40
+button goto "描画", *draw
+
+width control_width, ginfo_cy
+gsel 0, 1
+
+stop
+
+*draw
+screen 1, window_width, window_height, 0
+title window_title + " - 描画"
+setparam disp_scale, offset_x, offset_y
+
+line_data = ""
+x_data = ""
+y_data = ""
+repeat notemax
+	; データから今の座標と、次の座標を取得する
+	noteget line_data, cnt
+	strrep line_data, ",", "\t"
+	strrep line_data, " ", "\t"
+	split line_data, "\t", cur_data
+	noteget line_data, (cnt + 1) \ notemax
+	strrep line_data, ",", "\t"
+	strrep line_data, " ", "\t"
+	split line_data, "\t", next_data
+
+	; 中央の線を描画する
+	color 128, 128, 128
+	drawline double(cur_data(2)), double(cur_data(3)), double(next_data(2)), double(next_data(3))
+
+	; 今の線の左右に行った線を描画する
+	color 0, 0, 0
+	drawline double(cur_data(0)), double(cur_data(1)), double(next_data(0)), double(next_data(1))
+	drawline double(cur_data(4)), double(cur_data(5)), double(next_data(4)), double(next_data(5))
+loop
